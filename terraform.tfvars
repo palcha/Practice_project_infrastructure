@@ -13,5 +13,5 @@ private_subnet_2_cidr = "10.0.4.0/24"
 az1 = "eu-north-1a"
 az2 = "eu-north-1b"
 
-instance_type = "t3.medium"
+instance_type = "t3.micro"
 ami_id        = "ami-0c783070b2e26d98c"
