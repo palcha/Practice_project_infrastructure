@@ -26,6 +26,23 @@ resource "aws_instance" "main" {
 
   iam_instance_profile = var.instance_profile_name
 
+  user_data = <<-EOF
+  #!/bin/bash
+  set -e
+
+  # Install S3 Files mount helper
+  yum install -y amazon-efs-utils
+
+  # Create mount directory
+  mkdir -p /mnt/s3files
+
+  # Add persistent mount
+  echo "${var.s3_files_file_system_id}:/ /mnt/s3files s3files _netdev,nofail 0 0" >> /etc/fstab
+
+  # Mount S3 Files
+  mount -a
+EOF
+
   tags = {
     Name = "${var.project_name}-ec2"
   }

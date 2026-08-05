@@ -35,6 +35,20 @@ module "iam" {
   source = "./modules/iam"
 
   project_name = var.project_name
+
+  s3_bucket_arn = module.s3.bucket_arn
+}
+
+module "s3_files" {
+  source = "./modules/S3_files"
+
+  bucket_arn = module.s3.bucket_arn
+  role_arn   = module.iam.s3_files_role_arn
+
+  vpc_id   = module.network.vpc_id
+  vpc_cidr = var.vpc_cidr
+
+  subnet_id = module.network.private_subnet_ids[0]
 }
 
 module "ec2" {
@@ -45,8 +59,17 @@ module "ec2" {
   subnet_id             = module.network.private_subnet_ids[0]
   instance_profile_name = module.iam.instance_profile_name
 
-  ami_id        = var.ami_id
-  instance_type = var.instance_type
+  ami_id                   = var.ami_id
+  instance_type            = var.instance_type
+  s3_files_file_system_id  = module.s3_files.file_system_id
+  s3_files_mount_target_id = module.s3_files.mount_target_id
+}
+
+module "s3" {
+  source = "./modules/s3"
+
+  bucket_name  = var.bucket_name
+  project_name = var.project_name
 }
 
 #Resource block for VPC creation:

@@ -15,3 +15,5 @@ az2 = "eu-north-1b"
 
 instance_type = "t3.micro"
 ami_id        = "ami-0c783070b2e26d98c"
+
+bucket_name = "flask-project-palcha-2026"
