@@ -6,7 +6,7 @@ resource "aws_s3_bucket" "main" {
     Project = var.project_name
   }
 }
-
+#------#
 resource "aws_s3_bucket_versioning" "main" {
   bucket = aws_s3_bucket.main.id
 
