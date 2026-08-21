@@ -23,3 +23,8 @@ variable "vpc_cidr" {
   type        = string
 }
 
+variable "private_subnet_ids" {
+  description = "Private subnet IDs for S3 Files mount targets"
+  type        = list(string)
+}
+
