@@ -51,8 +51,8 @@ module "s3_files" {
   subnet_id = module.network.private_subnet_ids[0]
 }
 
-module "ec2" {
-  source = "./modules/ec2"
+module "EC2" {
+  source = "./modules/EC22"
 
   project_name          = var.project_name
   vpc_id                = module.network.vpc_id
@@ -66,7 +66,7 @@ module "ec2" {
 }
 
 module "S3" {
-  source = "./modules/s3"
+  source = "./modules/S3"
 
   bucket_name  = var.bucket_name
   project_name = var.project_name
