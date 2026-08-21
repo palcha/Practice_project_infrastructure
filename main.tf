@@ -52,7 +52,7 @@ module "s3_files" {
 }
 
 module "EC2" {
-  source = "./modules/EC22"
+  source = "./modules/EC2"
 
   project_name          = var.project_name
   vpc_id                = module.network.vpc_id
