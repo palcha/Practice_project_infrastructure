@@ -13,10 +13,10 @@ variable "role_arn" {
   type        = string
 }
 
-variable "subnet_id" {
-  description = "Subnet ID for the s3 Files mount target"
-  type        = string
-}
+# variable "subnet_id" {
+#   description = "Subnet ID for the s3 Files mount target"
+#   type        = string
+# }
 
 variable "vpc_cidr" {
   description = "CIDR block of the VPC"
