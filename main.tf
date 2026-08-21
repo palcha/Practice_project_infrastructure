@@ -36,7 +36,7 @@ module "iam" {
 
   project_name = var.project_name
 
-  s3_bucket_arn = module.s3.bucket_arn
+  s3_bucket_arn = module.S3.bucket_arn
 }
 
 module "s3_files" {
@@ -61,8 +61,8 @@ module "EC2" {
 
   ami_id                   = var.ami_id
   instance_type            = var.instance_type
-  s3_files_file_system_id  = module.s3_files.file_system_id
-  s3_files_mount_target_id = module.s3_files.mount_target_id
+  s3_files_file_system_id  = module.S3_files.file_system_id
+  s3_files_mount_target_id = module.S3_files.mount_target_id
 }
 
 module "S3" {
