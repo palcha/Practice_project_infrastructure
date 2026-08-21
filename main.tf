@@ -1,4 +1,3 @@
-
 #provider block installprovider plugin:
 terraform {
   required_providers {
@@ -36,14 +35,14 @@ module "iam" {
 
   project_name = var.project_name
 
-  S3_bucket_arn = module.S3.bucket_arn
+  s3_bucket_arn = module.s3.bucket_arn
 }
 
-module "S3_files" {
-  source = "./modules/S3_files"
+module "s3_files" {
+  source = "./modules/s3_files"
 
-  bucket_arn = module.S3.bucket_arn
-  role_arn   = module.iam.S3_files_role_arn
+  bucket_arn = module.s3.bucket_arn
+  role_arn   = module.iam.s3_files_role_arn
 
   vpc_id   = module.network.vpc_id
   vpc_cidr = var.vpc_cidr
@@ -61,12 +60,12 @@ module "EC2" {
 
   ami_id                   = var.ami_id
   instance_type            = var.instance_type
-  S3_files_file_system_id  = module.S3_files.file_system_id
-  S3_files_mount_target_id = module.S3_files.mount_target_id
+  s3_files_file_system_id  = module.s3_files.file_system_id
+  s3_files_mount_target_id = module.s3_files.mount_target_id
 }
 
-module "S3" {
-  source = "./modules/S3"
+module "s3" {
+  source = "./modules/s3"
 
   bucket_name  = var.bucket_name
   project_name = var.project_name

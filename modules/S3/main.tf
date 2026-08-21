@@ -1,4 +1,4 @@
-resource "aws_S3_bucket" "main" {
+resource "aws_s3_bucket" "main" {
   bucket = var.bucket_name
 
   tags = {
@@ -7,16 +7,16 @@ resource "aws_S3_bucket" "main" {
   }
 }
 
-resource "aws_S3_bucket_versioning" "main" {
-  bucket = aws_S3_bucket.main.id
+resource "aws_s3_bucket_versioning" "main" {
+  bucket = aws_s3_bucket.main.id
 
   versioning_configuration {
     status = "Enabled"
   }
 }
 
-resource "aws_S3_bucket_server_side_encryption_configuration" "main" {
-  bucket = aws_S3_bucket.main.id
+resource "aws_s3_bucket_server_side_encryption_configuration" "main" {
+  bucket = aws_s3_bucket.main.id
 
   rule {
     apply_server_side_encryption_by_default {
@@ -25,8 +25,8 @@ resource "aws_S3_bucket_server_side_encryption_configuration" "main" {
   }
 }
 
-resource "aws_S3_bucket_public_access_block" "main" {
-  bucket = aws_S3_bucket.main.id
+resource "aws_s3_bucket_public_access_block" "main" {
+  bucket = aws_s3_bucket.main.id
 
   block_public_acls       = true
   ignore_public_acls      = true

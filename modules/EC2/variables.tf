@@ -22,12 +22,12 @@ variable "instance_profile_name" {
   type = string
 }
 
-variable "S3_files_file_system_id" {
-  description = "S3 Files file system ID to mount on EC2"
+variable "s3_files_file_system_id" {
+  description = "s3 Files file system ID to mount on EC2"
   type        = string
 }
 
-variable "S3_files_mount_target_id" {
-  description = "S3 Files mount target ID"
+variable "s3_files_mount_target_id" {
+  description = "s3 Files mount target ID"
   type        = string
 }
