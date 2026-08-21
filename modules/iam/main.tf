@@ -34,8 +34,8 @@ data "aws_caller_identity" "current" {}
 
 data "aws_region" "current" {}
 
-resource "aws_iam_role" "s3_files_role" {
-  name = "s3-files-role"
+resource "aws_iam_role" "S3_files_role" {
+  name = "S3-files-role"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -57,7 +57,7 @@ resource "aws_iam_role" "s3_files_role" {
           }
 
           ArnLike = {
-            "aws:SourceArn" = "arn:aws:s3files:${data.aws_region.current.region}:${data.aws_caller_identity.current.account_id}:file-system/*"
+            "aws:SourceArn" = "arn:aws:S3files:${data.aws_region.current.region}:${data.aws_caller_identity.current.account_id}:file-system/*"
           }
         }
       }
@@ -65,9 +65,9 @@ resource "aws_iam_role" "s3_files_role" {
   })
 }
 
-resource "aws_iam_role_policy" "s3_files_policy" {
-  name = "s3-files-bucket-access"
-  role = aws_iam_role.s3_files_role.id
+resource "aws_iam_role_policy" "S3_files_policy" {
+  name = "S3-files-bucket-access"
+  role = aws_iam_role.S3_files_role.id
 
   policy = jsonencode({
     Version = "2012-10-17"
@@ -78,11 +78,11 @@ resource "aws_iam_role_policy" "s3_files_policy" {
         Effect = "Allow"
 
         Action = [
-          "s3:ListBucket",
-          "s3:ListBucketVersions"
+          "S3:ListBucket",
+          "S3:ListBucketVersions"
         ]
 
-        Resource = var.s3_bucket_arn
+        Resource = var.S3_bucket_arn
 
         Condition = {
           StringEquals = {
@@ -96,14 +96,14 @@ resource "aws_iam_role_policy" "s3_files_policy" {
         Effect = "Allow"
 
         Action = [
-          "s3:AbortMultipartUpload",
-          "s3:DeleteObject*",
-          "s3:GetObject*",
-          "s3:List*",
-          "s3:PutObject*"
+          "S3:AbortMultipartUpload",
+          "S3:DeleteObject*",
+          "S3:GetObject*",
+          "S3:List*",
+          "S3:PutObject*"
         ]
 
-        Resource = "${var.s3_bucket_arn}/*"
+        Resource = "${var.S3_bucket_arn}/*"
 
         Condition = {
           StringEquals = {
@@ -151,7 +151,7 @@ resource "aws_iam_role_policy" "s3_files_policy" {
   })
 }
 
-resource "aws_iam_role_policy_attachment" "s3_files_client" {
+resource "aws_iam_role_policy_attachment" "S3_files_client" {
   role       = aws_iam_role.ec2_role.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonS3FilesClientFullAccess"
 }

@@ -34,10 +34,10 @@ resource "aws_instance" "main" {
   yum install -y amazon-efs-utils
 
   # Create mount directory
-  mkdir -p /mnt/s3files
+  mkdir -p /mnt/S3files
 
   # Add persistent mount
-  echo "${var.s3_files_file_system_id}:/ /mnt/s3files s3files _netdev,nofail 0 0" >> /etc/fstab
+  echo "${var.S3_files_file_system_id}:/ /mnt/S3files S3files _netdev,nofail 0 0" >> /etc/fstab
 
   # Mount S3 Files
   mount -a
