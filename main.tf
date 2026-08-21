@@ -65,7 +65,7 @@ module "ec2" {
   s3_files_mount_target_id = module.s3_files.mount_target_id
 }
 
-module "s3" {
+module "S3" {
   source = "./modules/s3"
 
   bucket_name  = var.bucket_name
