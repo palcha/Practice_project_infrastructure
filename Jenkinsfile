@@ -59,5 +59,25 @@ pipeline {
                 }
             }
         }
+
+        stage('Terraform Approval') {
+    steps {
+        input(
+            message: 'Terraform plan reviewed. Do you want to apply the infrastructure?',
+            ok: 'Apply'
+        )
+    }
+}
+
+stage('Terraform Apply') {
+    steps {
+        withCredentials([[
+            $class: 'AmazonWebServicesCredentialsBinding',
+            credentialsId: 'aws-cred'
+        ]]) {
+            sh 'terraform apply -input=false -auto-approve'
+        }
+    }
+}
     }
 }
