@@ -9,10 +9,10 @@ output "file_system_id" {
 # }
 
 output "mount_target_ids" {
-  description = "S3 Files mount target IDs by subnet"
+  description = "S3 Files mount target IDs"
 
   value = {
-    for subnet_id, mount_target in aws_s3files_mount_target.main :
-    subnet_id => mount_target.id
+    for subnet_key, mount_target in aws_s3files_mount_target.main :
+    subnet_key => mount_target.id
   }
 }

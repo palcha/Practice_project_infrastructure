@@ -29,15 +29,26 @@ resource "aws_security_group" "s3_files" {
 }
 
 resource "aws_s3files_mount_target" "main" {
-  for_each = toset(var.private_subnet_ids)
+  for_each = {
+    subnet_a = var.private_subnet_ids[0]
+    subnet_b = var.private_subnet_ids[1]
+  }
 
-  file_system_id = aws_s3files_file_system.main.id
-  subnet_id      = each.value
-
-  security_groups = [
-    aws_security_group.s3_files.id
-  ]
+  file_system_id  = aws_s3files_file_system.main.id
+  subnet_id       = each.value
+  security_groups = [aws_security_group.s3_files.id]
 }
+
+# resource "aws_s3files_mount_target" "main" {
+#   for_each = toset(var.private_subnet_ids)
+
+#   file_system_id = aws_s3files_file_system.main.id
+#   subnet_id      = each.value
+
+#   security_groups = [
+#     aws_security_group.s3_files.id
+#   ]
+# }
 
 # resource "aws_s3files_mount_target" "main" {
 #   file_system_id = aws_s3files_file_system.main.id
