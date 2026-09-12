@@ -33,15 +33,29 @@ pipeline {
         }
 
         stage('Terraform Init') {
-            steps {
-                withCredentials([[
-                    $class: 'AmazonWebServicesCredentialsBinding',
-                    credentialsId: 'aws-cred'
-                ]]) {
-                    sh 'terraform init -input=false'
+    steps {
+        withCredentials([
+            string(
+                credentialsId: 'hcp-terraform-token',
+                variable: 'TF_TOKEN_app_terraform_io'
+            ),
+            [
+                $class: 'AmazonWebServicesCredentialsBinding',
+                credentialsId: 'aws-cred'
+            ]
+        ]) {
+            sh '''
+                test -f terraform.tfstate || {
+                    echo "ERROR: Existing terraform.tfstate was not found."
+                    echo "Stopping to prevent creating a new empty HCP Terraform state."
+                    exit 1
                 }
-            }
+
+                terraform init -input=false -migrate-state -force-copy
+            '''
         }
+    }
+}
 
         stage('Terraform Validate') {
             steps {
@@ -50,15 +64,21 @@ pipeline {
         }
 
         stage('Terraform Plan') {
-            steps {
-                withCredentials([[
-                    $class: 'AmazonWebServicesCredentialsBinding',
-                    credentialsId: 'aws-cred'
-                ]]) {
-                    sh 'terraform plan -input=false -no-color'
-                }
-            }
+    steps {
+        withCredentials([
+            string(
+                credentialsId: 'hcp-terraform-token',
+                variable: 'TF_TOKEN_app_terraform_io'
+            ),
+            [
+                $class: 'AmazonWebServicesCredentialsBinding',
+                credentialsId: 'aws-cred'
+            ]
+        ]) {
+            sh 'terraform plan -input=false -no-color'
         }
+    }
+}
 
         stage('Terraform Approval') {
     steps {
@@ -71,10 +91,16 @@ pipeline {
 
 stage('Terraform Apply') {
     steps {
-        withCredentials([[
-            $class: 'AmazonWebServicesCredentialsBinding',
-            credentialsId: 'aws-cred'
-        ]]) {
+        withCredentials([
+            string(
+                credentialsId: 'hcp-terraform-token',
+                variable: 'TF_TOKEN_app_terraform_io'
+            ),
+            [
+                $class: 'AmazonWebServicesCredentialsBinding',
+                credentialsId: 'aws-cred'
+            ]
+        ]) {
             sh 'terraform apply -input=false -auto-approve'
         }
     }

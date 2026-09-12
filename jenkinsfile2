@@ -32,16 +32,22 @@ pipeline {
             }
         }
 
-        stage('Terraform Init') {
-            steps {
-                withCredentials([[
-                    $class: 'AmazonWebServicesCredentialsBinding',
-                    credentialsId: 'aws-cred'
-                ]]) {
-                    sh 'terraform init -input=false'
-                }
-            }
+stage('Terraform Init') {
+    steps {
+        withCredentials([
+            string(
+                credentialsId: 'hcp-terraform-token',
+                variable: 'TF_TOKEN_app_terraform_io'
+            ),
+            [
+                $class: 'AmazonWebServicesCredentialsBinding',
+                credentialsId: 'aws-cred'
+            ]
+        ]) {
+            sh 'terraform init -input=false'
         }
+    }
+}
 
         stage('Terraform Validate') {
             steps {
@@ -49,16 +55,22 @@ pipeline {
             }
         }
 
-        stage('Terraform Destroy Plan') {
-            steps {
-                withCredentials([[
-                    $class: 'AmazonWebServicesCredentialsBinding',
-                    credentialsId: 'aws-cred'
-                ]]) {
-                    sh 'terraform plan -destroy -input=false -no-color'
-                }
-            }
+stage('Terraform Destroy Plan') {
+    steps {
+        withCredentials([
+            string(
+                credentialsId: 'hcp-terraform-token',
+                variable: 'TF_TOKEN_app_terraform_io'
+            ),
+            [
+                $class: 'AmazonWebServicesCredentialsBinding',
+                credentialsId: 'aws-cred'
+            ]
+        ]) {
+            sh 'terraform plan -destroy -input=false -no-color'
         }
+    }
+}
 
         stage('Destroy Approval') {
             steps {
@@ -69,15 +81,21 @@ pipeline {
             }
         }
 
-        stage('Terraform Destroy') {
-            steps {
-                withCredentials([[
-                    $class: 'AmazonWebServicesCredentialsBinding',
-                    credentialsId: 'aws-cred'
-                ]]) {
-                    sh 'terraform destroy -input=false -auto-approve'
-                }
-            }
+stage('Terraform Destroy') {
+    steps {
+        withCredentials([
+            string(
+                credentialsId: 'hcp-terraform-token',
+                variable: 'TF_TOKEN_app_terraform_io'
+            ),
+            [
+                $class: 'AmazonWebServicesCredentialsBinding',
+                credentialsId: 'aws-cred'
+            ]
+        ]) {
+            sh 'terraform destroy -input=false -auto-approve'
         }
+    }
+}
     }
 }
