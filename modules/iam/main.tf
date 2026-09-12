@@ -153,5 +153,5 @@ resource "aws_iam_role_policy" "s3_files_policy" {
 
 resource "aws_iam_role_policy_attachment" "s3_files_client" {
   role       = aws_iam_role.ec2_role.name
-  policy_arn = "arn:aws:iam::aws:policy/Amazons3FilesClientFullAccess"
+  policy_arn = "arn:aws:iam::aws:policy/AmazonS3FilesClientFullAccess"
 }
