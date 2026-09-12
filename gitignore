@@ -1,6 +1,6 @@
-# Terraform state
+<!-- # Terraform state
 *.tfstate
-*.tfstate.*
+*.tfstate.* -->
 
 # Downloaded Terraform providers/modules
 .terraform/
