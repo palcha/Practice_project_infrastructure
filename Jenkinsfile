@@ -45,13 +45,8 @@ pipeline {
             ]
         ]) {
             sh '''
-                test -f terraform.tfstate || {
-                    echo "ERROR: Existing terraform.tfstate was not found."
-                    echo "Stopping to prevent creating a new empty HCP Terraform state."
-                    exit 1
-                }
-
-                terraform init -input=false -migrate-state -force-copy
+                rm -f terraform.tfstate terraform.tfstate.backup
+                terraform init -input=false
             '''
         }
     }
