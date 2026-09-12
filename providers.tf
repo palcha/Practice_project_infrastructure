@@ -1,4 +1,11 @@
 terraform {
+  cloud {
+    organization = "flask-project-eu-north-1"
+
+    workspaces {
+      name = "flask-project-eu-north-1"
+    }
+  }
   required_providers {
     aws = {
       source = "hashicorp/aws"
