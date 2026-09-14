@@ -1,5 +1,6 @@
 module "s3_files" {
-  source = "./modules/s3_files"
+  source = "palcha/s3files/aws"
+  version = "1.0.0"
 
   bucket_arn = module.s3.bucket_arn
   role_arn   = module.iam.s3_files_role_arn

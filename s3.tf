@@ -1,5 +1,6 @@
 module "s3" {
-  source = "./modules/s3"
+  source  = "palcha/s3/aws"
+  version = "1.0.0"
 
   bucket_name  = var.bucket_name
   project_name = var.project_name

@@ -1,5 +1,6 @@
 module "EC2" {
-  source = "./modules/EC2"
+  source = "palcha/ec2/aws"
+  version = "1.0.0"
 
   project_name          = var.project_name
   vpc_id                = module.network.vpc_id

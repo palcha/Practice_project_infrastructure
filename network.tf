@@ -1,5 +1,6 @@
 module "network" {
-  source = "./modules/network"
+  source = "palcha/network/aws"
+  version = "1.0.0"
 
   vpc_cidr     = var.vpc_cidr
   project_name = var.project_name
